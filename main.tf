@@ -1124,9 +1124,6 @@ resource "aws_nat_gateway" "this" {
 
   depends_on = [aws_internet_gateway.this]
 
-  lifecycle {
-    create_before_destroy = true
-  }
 }
 
 resource "aws_route" "private_nat_gateway" {
