@@ -7,7 +7,7 @@ locals {
   len_redshift_subnets    = max(length(var.redshift_subnets), length(var.redshift_subnet_ipv6_prefixes))
   len_intra_subnets       = max(length(var.intra_subnets), length(var.intra_subnet_ipv6_prefixes))
   len_outpost_subnets     = max(length(var.outpost_subnets), length(var.outpost_subnet_ipv6_prefixes))
-  
+
   max_subnet_length = max(
     local.len_private_subnets,
     local.len_public_subnets,
@@ -1123,6 +1123,10 @@ resource "aws_nat_gateway" "this" {
   )
 
   depends_on = [aws_internet_gateway.this]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_route" "private_nat_gateway" {
